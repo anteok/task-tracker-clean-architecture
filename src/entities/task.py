@@ -13,7 +13,7 @@ class TaskStatus(Enum):
 
 @dataclass
 class TaskEntity:
-    id: str
+    task_id: str
     description: str
     create_time: datetime
     update_time: datetime

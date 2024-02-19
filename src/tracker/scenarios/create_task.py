@@ -14,7 +14,7 @@ class CreateTaskDto:
     status: str
 
     @classmethod
-    def from_entity(cls, entity: TaskEntity):
+    def from_entity(cls, entity: TaskEntity) -> 'CreateTaskDto':
         raw_data = asdict(entity)
         raw_data['status'] = raw_data['status'].name
         return cls(**raw_data)
@@ -28,15 +28,13 @@ class CreateTaskInterface(metaclass=ABCMeta):
 
 class CreateTaskInteractor:
 
-    def __init__(self, task_id: str, description: str, repository: CreateTaskInterface):
-        self._task_id = task_id
-        self._description = description
+    def __init__(self, repository: CreateTaskInterface):
         self._repository = repository
 
-    def create_task(self) -> None:
+    def create_task(self, task_id: str, description: str) -> None:
         entity = TaskEntity(
-            task_id=self._task_id,
-            description=self._description,
+            task_id=task_id,
+            description=description,
             create_time=datetime.now(),
             update_time=datetime.now(),
             status=TaskStatus.in_backlog,

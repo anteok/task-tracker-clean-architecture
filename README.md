@@ -13,8 +13,9 @@ A task is an entity that follows some rules:
 
 ## Business cases
 The tracker must offer some useful functions:
+- retrieving task description in upper case by task id (weird, but this is what the boss wants)
 - task creation
 - changing task status
-- task deletion
+- task deletion, if task status is done
 
 Let the magic happen!

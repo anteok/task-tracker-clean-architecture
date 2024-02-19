@@ -33,14 +33,15 @@ class TestCreateTaskInteractor:
     @pytest.fixture
     def interactor(self) -> CreateTaskInteractor:
         return CreateTaskInteractor(
-            task_id='some',
-            description='any',
             repository=Mock(create_task=Mock())
         )
 
     @freeze_time('2020-10-10')
     def test_create_task(self, interactor):
-       interactor.create_task()
+       interactor.create_task(
+           task_id='some',
+           description='any',
+       )
        interactor._repository.create_task.assert_called_with(
            CreateTaskDto(
                task_id='some',

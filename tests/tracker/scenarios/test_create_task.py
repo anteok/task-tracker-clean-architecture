@@ -5,27 +5,7 @@ import pytest
 from freezegun import freeze_time
 
 from entities.task import TaskEntity, TaskStatus
-from tracker.scenarios.create_task import CreateTaskDto, CreateTaskInteractor
-
-
-class TestCreateTaskDto:
-
-    def test_from_entity(self):
-        entity = TaskEntity(
-            task_id='some',
-            description='any',
-            create_time=datetime(2020, 10, 10),
-            update_time=datetime(2020, 10, 10),
-            status=TaskStatus.in_backlog
-        )
-
-        assert CreateTaskDto.from_entity(entity) == CreateTaskDto(
-            task_id='some',
-            description='any',
-            create_time=datetime(2020, 10, 10),
-            update_time=datetime(2020, 10, 10),
-            status='in_backlog'
-        )
+from scenarios.create_task import CreateTaskInteractor
 
 
 class TestCreateTaskInteractor:
@@ -43,11 +23,11 @@ class TestCreateTaskInteractor:
            description='any',
        )
        interactor._repository.create_task.assert_called_with(
-           CreateTaskDto(
+           TaskEntity(
                task_id='some',
                description='any',
                create_time=datetime(2020, 10, 10),
                update_time=datetime(2020, 10, 10),
-               status='in_backlog',
+               status=TaskStatus.in_backlog,
            )
        )

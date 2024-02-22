@@ -1,5 +1,5 @@
 # Task tracker clean architecture
-Clean architectrure based implementation of a simple task tracker 
+Clean architecture based implementation of a simple task tracker 
 
 ## Tracker
 Task tracker is just a service used for managing tasks.

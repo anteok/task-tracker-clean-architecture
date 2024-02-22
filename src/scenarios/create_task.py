@@ -7,7 +7,7 @@ from entities.task import TaskEntity, TaskStatus
 class ICreateTaskRepository(metaclass=ABCMeta):
 
     @abstractmethod
-    def create_task(self, dto: TaskEntity) -> None: ...
+    def create_task(self, entity: TaskEntity) -> None: ...
 
 
 class CreateTaskInteractor:

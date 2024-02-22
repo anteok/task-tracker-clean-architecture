@@ -16,7 +16,7 @@ class UpdateStatusDto:
     update_time: datetime
 
     @classmethod
-    def from_request(cls, task_id: str, status: str) -> 'UpdateStatusDto':
+    def with_auto_update_time(cls, task_id: str, status: str) -> 'UpdateStatusDto':
         if not TaskStatus.has_value(status):
             raise WrongStatusCaseException('No such value')
         return cls(task_id=task_id, status=TaskStatus[status], update_time=datetime.now())
@@ -25,7 +25,7 @@ class UpdateStatusDto:
 class IUpdateStatusRepository(metaclass=ABCMeta):
 
     @abstractmethod
-    def update_task(self, task: UpdateStatusDto) -> None: ...
+    def update_task(self, update_dto: UpdateStatusDto) -> None: ...
 
 
 class UpdateStatusInteractor:
@@ -34,5 +34,5 @@ class UpdateStatusInteractor:
 
     def update_status(self, task_id: str, status: str) -> None:
         return self._repository.update_task(
-            task=UpdateStatusDto.from_request(task_id, status),
+            update_dto=UpdateStatusDto.with_auto_update_time(task_id, status),
         )

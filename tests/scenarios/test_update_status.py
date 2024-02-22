@@ -13,7 +13,7 @@ class TestUpdateStatusDto:
     @freeze_time('2020-10-10')
     @pytest.mark.parametrize('status', [val.name for val in TaskStatus])
     def test_from_request(self, status):
-        assert UpdateStatusDto.from_request(task_id='any', status=status) == UpdateStatusDto(
+        assert UpdateStatusDto.with_auto_update_time(task_id='any', status=status) == UpdateStatusDto(
             task_id='any',
             status=TaskStatus[status],
             update_time=datetime(2020, 10, 10)
@@ -21,7 +21,7 @@ class TestUpdateStatusDto:
 
     def test_wrong_status(self):
         with pytest.raises(WrongStatusCaseException) as exc:
-            UpdateStatusDto.from_request(task_id='', status='wrong')
+            UpdateStatusDto.with_auto_update_time(task_id='', status='wrong')
         assert exc.value.args[0] == 'No such value'
 
 
@@ -36,7 +36,7 @@ class TestUpdateStatusInteractor:
     @freeze_time('2020-10-10')
     def test_update_status_success(self, interactor):
         interactor.update_status('any', 'in_backlog')
-        interactor._repository.update_task.assert_called_with(task=UpdateStatusDto(
+        interactor._repository.update_task.assert_called_with(update_dto=UpdateStatusDto(
             task_id='any',
             status=TaskStatus.in_backlog,
             update_time=datetime(2020, 10, 10),

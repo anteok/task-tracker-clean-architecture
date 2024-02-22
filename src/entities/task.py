@@ -10,6 +10,10 @@ class TaskStatus(Enum):
     in_review = auto()
     done = auto()
 
+    @classmethod
+    def has_value(cls, value):
+        return value in cls._member_names_
+
 
 @dataclass
 class TaskEntity:

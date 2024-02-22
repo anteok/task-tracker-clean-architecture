@@ -23,5 +23,5 @@ Let the magic happen!
 ## Details
 The company can't afford any working server, so you are to use in-memory storage for all the tasks
 
-Also, frontend developer is going to join your team soon, but MVP presentation is so close! 
+Also, frontend developer is going to join my team soon, but MVP presentation is so close! 
 I have to show all the main features with CLI commands!

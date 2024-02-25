@@ -4,7 +4,7 @@ import pytest
 
 from controllers.in_memory import UpdateStatusController, DeleteTaskController
 from details.id_generator import IdGenerator
-from views.command import CreatePattern, GetDescriptionPattern, UpdateStatusPattern, DeleteTaskPattern
+from views.command_pattern import CreatePattern, GetDescriptionPattern, UpdateStatusPattern, DeleteTaskPattern
 
 
 class TestCommandPattern:

@@ -1,3 +1,4 @@
+import re
 from abc import ABCMeta, abstractmethod
 from typing import Type, TypeVar, Generic
 
@@ -10,7 +11,7 @@ T = TypeVar('T', bound=InMemoryController)
 
 
 class CommandPattern(Generic[T], metaclass=ABCMeta):
-    _start: str
+    regex: str
     _controller_class: Type[T]
 
     def __init__(self, _repository: InMemoryRepository):
@@ -21,7 +22,7 @@ class CommandPattern(Generic[T], metaclass=ABCMeta):
 
 
 class CreatePattern(CommandPattern[CreateTaskController]):
-    _regex = r'create task \"[a-zA-Z\s]*\"'
+    regex = r'create task \"[a-zA-Z\s]*\"'
     _controller_class = CreateTaskController
 
     def __init__(self, _repository: InMemoryRepository):
@@ -37,7 +38,7 @@ class CreatePattern(CommandPattern[CreateTaskController]):
 
 
 class GetDescriptionPattern(CommandPattern[GetTaskDescriptionController]):
-    _regex = r'what is (\d)*'
+    regex = r'what is (\d{1,3})'
     _controller_class = GetTaskDescriptionController
 
     def respond(self, command: str) -> str:
@@ -47,7 +48,7 @@ class GetDescriptionPattern(CommandPattern[GetTaskDescriptionController]):
 
 
 class UpdateStatusPattern(CommandPattern[UpdateStatusController]):
-    _regex = r'move task (\d)* to (in_backlog|prioritized|in_work|in_review|done)'
+    regex = r'move task (\d{1,3}) to (in_backlog|prioritized|in_work|in_review|done)'
     _controller_class = UpdateStatusController
 
     def respond(self, command: str) -> str:
@@ -58,10 +59,19 @@ class UpdateStatusPattern(CommandPattern[UpdateStatusController]):
 
 
 class DeleteTaskPattern(CommandPattern[DeleteTaskController]):
-    _regex = r'delete task (\d)*'
+    regex = r'delete task (\d{1,3})'
     _controller_class = DeleteTaskController
 
     def respond(self, command: str) -> str:
         task_id = command.split()[-1]
         self._controller.execute(task_id)
         return f'The task with id {task_id} was deleted'
+
+
+class CommandPatternFactory:
+    @classmethod
+    def get_response(cls, command: str, repository: InMemoryRepository) -> str:
+        for class_ in CommandPattern.__subclasses__():
+            if re.search(class_.regex, command):
+                return class_(repository).respond(command)
+        return f'Cannot parse command "{command}"'

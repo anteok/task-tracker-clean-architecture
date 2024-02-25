@@ -25,3 +25,6 @@ Unique ID generation must be provided too.
 
 Also, frontend developer is going to join the team soon, but MVP presentation is so close, that is why 
 we have to show all the main features with CLI commands!
+
+## Running
+`python src/views/handler.py`

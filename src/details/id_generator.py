@@ -1,7 +1,7 @@
-from abc import ABCMeta
+from details.singleton import SingletonMeta
 
 
-class IdGenerator(metaclass=ABCMeta):
+class IdGenerator(metaclass=SingletonMeta):
     __last_id = 0
 
     def get_id(self) -> str:

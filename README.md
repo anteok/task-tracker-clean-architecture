@@ -9,7 +9,6 @@ A task is an entity that follows some rules:
 - it has a determined status (in_backlog, prioritized, in_work, in_review, done)
 - it has a creation time
 - it has a status update time (it is equal to creation time in the moment of creation)
-- first iteration means that task has only one assignee (you)
 
 ## Business cases
 The tracker must offer some useful functions:
@@ -21,7 +20,8 @@ The tracker must offer some useful functions:
 Let the magic happen!
 
 ## Details
-The company can't afford any working server, so you are to use in-memory storage for all the tasks
+The company can't afford any working server, so we are to use in-memory storage for all the tasks.
+Unique ID generation must be provided too.
 
-Also, frontend developer is going to join my team soon, but MVP presentation is so close! 
-I have to show all the main features with CLI commands!
+Also, frontend developer is going to join the team soon, but MVP presentation is so close, that is why 
+we have to show all the main features with CLI commands!
